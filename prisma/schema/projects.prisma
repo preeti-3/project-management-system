@@ -1,0 +1,13 @@
+model Projects {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  departmentId Int
+  department   Departments @relation(fields: [departmentId], references: [id])
+
+  assignedToId Int?
+  assignedTo   User? @relation(fields: [assignedToId], references: [id], name: "UserProjects") // Named relation
+}

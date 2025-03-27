@@ -1,0 +1,10 @@
+model Departments {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users    User[] // One department can have multiple users
+  projects Projects[] // One department can have multiple projects
+}

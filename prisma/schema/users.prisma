@@ -1,0 +1,21 @@
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(USER)
+
+  departmentId Int?
+  department   Departments? @relation(fields: [departmentId], references: [id])
+
+  assignedProjects Projects[] @relation("UserProjects") // Back-reference
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
