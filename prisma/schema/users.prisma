@@ -14,7 +14,7 @@ model User {
   departmentId Int?
   department   Departments? @relation(fields: [departmentId], references: [id])
 
-  assignedProjects Projects[] @relation("UserProjects") // Back-reference
+  assignedProjects UserProjects[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

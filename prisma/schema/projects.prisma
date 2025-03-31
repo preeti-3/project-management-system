@@ -1,13 +1,26 @@
 model Projects {
-  id          Int      @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   name        String
   description String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   departmentId Int
-  department   Departments @relation(fields: [departmentId], references: [id])
+  department   Departments  @relation(fields: [departmentId], references: [id])
 
-  assignedToId Int?
-  assignedTo   User? @relation(fields: [assignedToId], references: [id], name: "UserProjects") // Named relation
+  // Replace the one-to-one relation with a many-to-many relation
+  assignedTo   UserProjects[]
+}
+
+// Create a join table for the many-to-many relationship
+model UserProjects {
+  user        User     @relation(fields: [userId], references: [id])
+  userId      Int
+  
+  project     Projects @relation(fields: [projectId], references: [id])
+  projectId   Int
+  
+  assignedAt  DateTime @default(now())
+
+  @@id([userId, projectId])
 }

@@ -5,6 +5,6 @@ model Departments {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  users    User[] // One department can have multiple users
-  projects Projects[] // One department can have multiple projects
+  users    User[] 
+  projects Projects[] 
 }
