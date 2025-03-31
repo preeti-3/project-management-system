@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { LoginDto } from './dto/login.dto';
 import { SignupDto } from './dto/signup.dto';
+import generateToken from '../common/auth/generate.token';
 
 @Injectable()
 export class AuthService {
@@ -37,13 +38,18 @@ export class AuthService {
             throw new UnauthorizedException('Invalid credentials');
         }
         // Generate JWT token
-        const token = this.jwtService.sign({ id: user.id, email: user.email, role: user.role });
+        const token = await generateToken(user);
 
         return { message: 'Login successful', token };
     }
 
 
     async findAllUser() {
+        // Find user by email
+        const user = await this.prisma.user.findMany();
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
         return this.prisma.user.findMany();
     }
 }

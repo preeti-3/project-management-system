@@ -23,5 +23,5 @@ export class AuthController {
     findAllUser() {
         return this.authService.findAllUser();
     }
-
+    
 }
